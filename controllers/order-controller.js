@@ -4,10 +4,14 @@ const payOS = require("../utils/payos");
 
 router.post("/create", async function (req, res) {
   const { description, returnUrl, cancelUrl, amount } = req.body;
+
+  // Slice description nếu dài quá 9 ký tự
+  const trimmedDescription = description.length > 9 ? description.slice(0, 9) : description;
+
   const body = {
     orderCode: Number(String(new Date().getTime()).slice(-6)),
     amount,
-    description,
+    description: trimmedDescription,
     cancelUrl,
     returnUrl
   };
